@@ -15,6 +15,7 @@
       --accent-2: #22d3ee;
       --border: #1f2937;
       --shadow: 0 20px 40px rgba(2, 6, 23, 0.35);
+      --glass: rgba(15, 23, 42, 0.6);
     }
 
     * { box-sizing: border-box; }
@@ -42,6 +43,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 24px 0 12px;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
     .brand {
@@ -72,6 +75,7 @@
       border-radius: 20px;
       padding: 28px;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
     .headline {
@@ -129,7 +133,28 @@
       border-radius: 16px;
       padding: 20px;
       box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px 200px at 20% -10%, rgba(56, 189, 248, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 25px 45px rgba(2, 6, 23, 0.45);
+    }
+
+    .card:hover::after { opacity: 1; }
 
     .section {
       margin-top: 56px;
@@ -155,6 +180,12 @@
       border: 1px solid rgba(148, 163, 184, 0.2);
       font-size: 0.85rem;
       color: #e5e7eb;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tag:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.4);
     }
 
     .project-title {
@@ -182,9 +213,48 @@
       gap: 12px;
     }
 
+    .fade-in {
+      animation: fadeInUp 0.8s ease both;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     @media (max-width: 640px) {
       .nav { flex-direction: column; align-items: flex-start; gap: 8px; }
       .nav a { margin-left: 0; }
+      .hero { padding: 32px 0 24px; }
+      .headline { font-size: 2rem; }
+      .cta-row { gap: 10px; }
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 420px) {
+      .container { width: 92%; }
+      .card { padding: 16px; }
+      .tag-list { gap: 8px; }
     }
   </style>
 </head>
@@ -201,7 +271,7 @@
     </nav>
 
     <section class="hero">
-      <div>
+      <div class="fade-in delay-1">
         <h1 class="headline">Software Engineer &amp; Machine Learning Enthusiast</h1>
         <p class="subhead">Software engineer specializing in ML-powered APIs and backend systems with hands-on delivery using Python, FastAPI, Docker, and cloud deployment platforms.</p>
         <div class="cta-row">
@@ -210,7 +280,7 @@
           <a class="btn btn-outline" href="https://drive.google.com/file/d/19xloewo4irE35TJrIa99Eqfm3VryTQq4/view?usp=sharing" target="_blank" rel="noreferrer">Resume</a>
         </div>
       </div>
-      <div class="hero-card">
+      <div class="hero-card fade-in delay-2">
         <h3 style="margin-top:0;">Quick Highlights</h3>
         <ul class="muted" style="padding-left: 18px; margin: 0;">
           <li>Led a 4-member Agile team to build and deploy a real-time toxicity &amp; profanity detection API.</li>
@@ -220,7 +290,7 @@
       </div>
     </section>
 
-    <section id="about" class="section">
+    <section id="about" class="section fade-in delay-1">
       <h2>About</h2>
       <div class="card">
         <p class="muted" style="margin: 0;">
@@ -229,7 +299,7 @@
       </div>
     </section>
 
-    <section id="experience" class="section">
+    <section id="experience" class="section fade-in delay-2">
       <h2>Professional Experience</h2>
       <div class="card">
         <h3 style="margin-top:0;">Machine Learning Engineer | Scrum Master, Intern</h3>
@@ -243,7 +313,7 @@
       </div>
     </section>
 
-    <section id="skills" class="section">
+    <section id="skills" class="section fade-in delay-3">
       <h2>Core Skills</h2>
       <div class="grid">
         <div class="card">
@@ -293,7 +363,7 @@
       </div>
     </section>
 
-    <section id="projects" class="section">
+    <section id="projects" class="section fade-in delay-4">
       <h2>Featured Projects</h2>
       <div class="grid">
         <div class="card">
@@ -362,7 +432,7 @@
       </div>
     </section>
 
-    <section id="education" class="section">
+    <section id="education" class="section fade-in delay-2">
       <h2>Education</h2>
       <div class="grid">
         <div class="card">
@@ -378,7 +448,7 @@
       </div>
     </section>
 
-    <section id="contact" class="section">
+    <section id="contact" class="section fade-in delay-3">
       <h2>Let’s Connect</h2>
       <div class="card">
         <p class="muted" style="margin-top:0;">Open to software engineering and ML roles, internships, and collaborations.</p>
